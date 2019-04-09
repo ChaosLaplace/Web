@@ -1,0 +1,19 @@
+{
+  "name": "htdocs",
+  "version": "1.0.0",
+  "description": "for job",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ChaosLaplace/Web.git"
+  },
+  "author": "Hank",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ChaosLaplace/Web/issues"
+  },
+  "homepage": "https://github.com/ChaosLaplace/Web#readme"
+}
