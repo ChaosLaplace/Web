@@ -1,55 +1,29 @@
-/*
-//MongoDB
-var MongoClient = require('mongodb').MongoClient; //匯入MngoDB模塊
-var collection; //宣告變數
-//讓其他程式使用Cover function
-module.exports = function DB(serverhost, table, CollectionName, cb)
-{
-    MongoClient.connect('mongodb://' + serverhost + table, function(err, DB)
-    {
-        if(DB)
-        {
-            console.log('DB Access Flash');
-            console.log('DB -> ' + table);
-            
-            collection = DB.collection(CollectionName); //存放該資料表內容(Object)
+const mysql = require('mysql');
 
-            if(collection)
-            {
-                console.log('CollectionName -> ' + CollectionName);
-                cb(collection); //回傳該資料表內容(Object)
-            }
-            else
-            {
-                console.log('No DB -> ' + table);
-                console.log('No CollectionName -> ' + CollectionName);
-                console.log('DB close');
-                DB.close();
-            }
-        }
-        else
-        {
-            console.log('err -> ' + err);
-            console.log('DB close');
-            DB.close();
-        }
-    });
-}
-*/
-var MongoClient = require('mongodb').MongoClient;
-
-MongoClient.connect('mongodb://localhost:27017/test', function(err, DB)
+const config =
 {
-    if(DB)
-    {
-        console.log('DB Access Flash');
-        console.log('DB close');
-        DB.close();
+    host: '35.201.129.44',
+    user: 'root',
+    password: 'mysql',
+    database: 'node',
+    port: 3306,
+    ssl: true
+};
+
+const connect_mysql = new mysql.createConnection(config);
+
+connect_mysql.connect(function(err)
+{ 
+    if(err) 
+    { 
+        console.log('[DB]mysql connect -> err');
+        throw err;
     }
     else
     {
-        console.log('err -> ' + err);
-        console.log('DB close');
-        DB.close();
+        console.log('[DB]mysql connect -> success');
     }
+
+    console.log('[DB]mysql connect -> close');
+    connect_mysql.end();
 });
