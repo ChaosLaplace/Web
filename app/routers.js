@@ -22,24 +22,6 @@ module.exports = function(app)
             res.render('index', {Date : date(), Session : 'No Seesion'}); //載入index.ejs頁面
         }
     });
-    app.get('/Login', function(req, res)
-    {
-        //Error: Can't set headers after they are sent -> res.send()/res.json(),最後都有res.end()
-        console.log('[%s]Server Access Flash -> get /',  date());
-
-        if(req.session.user)
-        {
-            console.log('Session -> %s', JSON.stringify(req.session.user));
-
-            res.render('index', {Date : date(), Session : 'Seesion -> ' + JSON.stringify(req.session.user)}); //載入index.ejs頁面
-        }
-        else
-        {
-            console.log('No Session');
-
-            res.render('index', {Date : date(), Session : 'No Seesion'}); //載入index.ejs頁面
-        }
-    });
     //驗證Session
     app.get('/confirm', function(req, res)
     {
