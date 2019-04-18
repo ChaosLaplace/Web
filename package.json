@@ -4,7 +4,7 @@
   "description": "for job",
   "main": "index.js",
   "scripts": {
-    "test": "Node.js + Express + Ejs + Ajax + jQuery + MySQL + GitHub"
+    "test": "Node.js + Forever + Express + Ejs + Ajax + jQuery + MySQL + GitHub"
   },
   "repository": {
     "type": "git",

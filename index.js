@@ -23,7 +23,7 @@ var date = require('./things/date'); //自製時間格式
 
 var app = express(); //產生express物件
 //var redisClient = redis.createClient(); //產生redisClient客戶端
-var port = process.env.PORT || 3000; //環境變數(執行時給的外部參數PORT=?)或8080(同80,WWW代理服務,實現網頁瀏覽)
+var port = process.env.PORT || 80; //環境變數(執行時給的外部參數PORT=?)或8080(同80,WWW代理服務,實現網頁瀏覽)
 var key = 'Omatase'; //密鑰設定
 var secret =
 {
