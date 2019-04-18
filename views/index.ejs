@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset = 'UTF-8'>
+    <title>登入驗證</title>
+    <!--
+        http去掉避免因為開啟了https的網頁,但jQuery是http所產生的安全性問題
+    -->
+    <script src='//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js'></script>
+    <script src='//ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js'></script>
+    <script>
+        //ready()函數不應與<body onload=''>一起使用
+        $(document).ready(function()
+        {
+            $('#Confirm').hide(); //驗證完才顯示
+            $('#Error').hide(); //有錯誤訊息才顯示
+
+            $('#Pass').click(function()
+            {
+                var params =
+                {
+                    user : $('#User').val(),
+                    password : $('#Password').val()
+                };
+
+                if(!params.user && !params.password)
+                {
+                    alert('請輸入帳號和密碼');
+                }
+                else if(!params.user)
+                {
+                    alert('請輸入帳號');
+                }
+                else if(!params.password)
+                {
+                    alert('請輸入密碼');
+                }
+                else
+                {
+                    //Ajax GET的數據會被瀏覽器緩存下來
+                    //Unexpected token o in JSON at position 1 -> dataType不要json格式
+                    $.ajax(
+                    {
+                        type : 'GET',
+                        dataType : 'text',
+                        url : '/confirm',
+                        data : params,
+                        error: function(jqXHR, textStatus, errorThrown)
+                        {
+                            $('#Error').show().text('Error -> ' + textStatus + ' & ' + errorThrown);
+                        },
+                        success : function(data)
+                        {
+                            $('#Confirm').show().html(data);
+                        }
+                    });
+                    /*
+                    //jQuery
+                    //GET
+                    $('#Confirm').empty().load('/confirm?user=' + params.user + '&password=' + params.password);
+                    //POST
+                    $('#Confirm').empty().load('/confirm', {user : params.user, password : params.password});
+                    */
+                }
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <center>
+        <div>現在時間</div>
+        <div><%= Date %></div>
+
+        <table>
+        <div>請輸入帳號</div>
+        <div><input id='User' type='text'></div>
+        <div>請輸入密碼</div>
+        <div><input id='Password' type='password'></div>
+
+        <div><button id='Pass' type='button'>Click</button></div>
+        </table>
+
+        <div id='Confirm'>Confirm</div>
+
+        <div id='Error'>Error</div>
+
+        <div><%= Session%></div>
+    </center>
+</body>
+
+</html>
