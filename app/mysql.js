@@ -1,3 +1,4 @@
+//app/mysql.js
 const mysql = require('mysql');
 
 const config =
