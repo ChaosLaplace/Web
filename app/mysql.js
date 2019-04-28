@@ -13,18 +13,24 @@ const config =
 
 const connect_mysql = new mysql.createConnection(config);
 
-connect_mysql.connect(function(err)
-{ 
-    if(err) 
-    { 
-        console.log('[DB]mysql connect -> err');
-        throw err;
-    }
-    else
+module.exports =
+{
+    connect : function()
     {
-        console.log('[DB]mysql connect -> success');
-    }
+        connect_mysql.connect(function(err)
+        { 
+            if(err) 
+            { 
+                console.log('[DB]mysql connect -> err');
+                throw err;
+            }
+            else
+            {
+                console.log('[DB]mysql connect -> success');
+            }
 
-    console.log('[DB]mysql connect -> close');
-    connect_mysql.end();
-});
+            console.log('[DB]mysql connect -> close');
+            connect_mysql.end();
+        });
+    }
+};

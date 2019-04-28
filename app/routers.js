@@ -50,7 +50,7 @@ module.exports = function(app, log)
         {
             console.log('No root');
 
-            res.render('confirm', {user : null, password : null}); //載入get.ejs頁面
+            res.render('confirm', {user : user : user_session.user, password : user_session.password}); //載入get.ejs頁面
         }
     });
     //[GET] end
