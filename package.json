@@ -18,11 +18,14 @@
   "homepage": "https://github.com/ChaosLaplace/Web#readme",
   "dependencies": {
     "body-parser": "^1.18.3",
+    "connect-redis": "^3.4.1",
     "cookie-parser": "^1.4.4",
     "ejs": "^2.6.1",
     "express": "^4.16.4",
     "express-session": "^1.16.1",
     "jquery": "^3.4.0",
-    "mysql": "^2.16.0"
+    "log4js": "^4.1.0",
+    "mysql": "^2.16.0",
+    "redis": "^2.8.0"
   }
 }
