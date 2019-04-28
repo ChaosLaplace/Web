@@ -79,7 +79,7 @@ module.exports =
     }
 };
 
-
+/*
 SET CHARSET utf8;
 
 use node;
@@ -95,3 +95,4 @@ CREATE TABLE `Session`
   PRIMARY KEY (`id`)
 )
 ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+*/
