@@ -1,6 +1,7 @@
 //app/routers.js
 var date = require('../things/date'); //自製時間格式
 var crypto = require('../things/crypto'); //自製加解密格式
+var mysql = require('./mysql'); //自製db格式
 
 module.exports = function(app, log)
 {
@@ -10,9 +11,12 @@ module.exports = function(app, log)
         //Error: Can't set headers after they are sent -> res.send()/res.json(),最後都有res.end()
         console.log('Server Access Flash -> get /');
 
+        var select = mysql.SELECT('Session');
+
         if(req.session.user)
         {
             console.log('Session -> %s', JSON.stringify(req.session.user));
+            console.log('select -> %s', select);
 
             res.render('login', {Date : date(), Session : 'Seesion -> ' + JSON.stringify(req.session.user)}); //載入index.ejs頁面
         }
@@ -35,6 +39,8 @@ module.exports = function(app, log)
             user : crypto.encrypt(req.query.user),
             password : crypto.encrypt(req.query.password)
         };
+
+        mysql.INSERT('Session', user_session.user, user_session.password);
 
         //查詢db是否有帳密
         if(crypto.decrypt(user_session.user) === 'root' && crypto.decrypt(user_session.password) === 'root')
