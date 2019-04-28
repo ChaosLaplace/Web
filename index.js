@@ -15,21 +15,21 @@ var express = require('express'); //express架構模塊
 var bodyParser = require('body-parser'); //middleware(中介軟體),後端用來解析post到body的資料
 var cookieParser = require('cookie-parser'); //cookie模塊
 var session = require('express-session'); //session模塊
-//var redis = require('redis'); //redis內存資料庫
-//var redisStore = require('connect-redis')(session); //connect-redis -> session儲存器
+var redis = require('redis'); //redis內存資料庫
+var redisStore = require('connect-redis')(session); //connect-redis -> session儲存器
 
 var routers = require('./app/routers'); //自製路由
 var date = require('./things/date'); //自製時間格式
 var log = require('./things/log'); //自製log格式
 
 var app = express(); //產生express物件
-//var redisClient = redis.createClient(); //產生redisClient客戶端
-var port = process.env.PORT || 8080; //環境變數(執行時給的外部參數PORT=?)或8080(同80,WWW代理服務,實現網頁瀏覽)
+var redisClient = redis.createClient(6379, '127.0.0.1'); //產生redisClient客戶端
+var port = process.env.PORT || 80; //環境變數(執行時給的外部參數PORT=?)或8080(同80,WWW代理服務,實現網頁瀏覽)
 var key = 'Omatase'; //密鑰設定
 var secret =
 {
-    //store : new redisStore({client : redisClient}),
-    cookie : {maxAge : 30 * 1000}, //過期時間(ms)
+    store : new redisStore({client : redisClient}),
+    cookie : {maxAge : 24 * 60 * 60 * 1000}, //過期時間(ms)
     secret : key,
     resave : true,
     saveUninitialized : true
@@ -45,6 +45,19 @@ app.use(cookieParser(key)); //給cookie密鑰
 app.use(session(secret)); //使用session設定
 
 routers(app, log); //載入所有路由(傳app && log過去讓routers.js使用)
+
+//redis
+redisClient.on('ready', function(err)
+{
+    if(err)
+    {
+        console.log('Err -> %s', err);
+    }
+    else
+    {
+        console.log('redisClient ready');
+    }
+});
 
 //啟動server
 var server = app.listen(port, function() //listen EADDRINUSE 此錯誤為port已占用
