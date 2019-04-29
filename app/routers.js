@@ -40,7 +40,7 @@ module.exports = function(app, log)
         mysql.INSERT('Session', user_session.user, user_session.password);
 
         //查詢db是否有帳密
-        if(user_session.user === mysql.SELECT('Session') && user_session.password === mysql.SELECT('Session'))
+        if(mysql.SELECT('Session', user_session.user, user_session.password))
         {
             console.log('encrypt success');
 
