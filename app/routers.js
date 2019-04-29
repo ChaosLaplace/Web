@@ -40,7 +40,7 @@ module.exports = function(app, log)
         mysql.INSERT('Session', user_session.user, user_session.password);
 
         //查詢db是否有帳密
-        if(crypto.decrypt(user_session.user) === mysql.SELECT('User', 'Session') && crypto.decrypt(user_session.password) === mysql.SELECT('Password', 'Session'))
+        if(crypto.decrypt(user_session.user) === crypto.decrypt(mysql.SELECT('User', 'Session')) && crypto.decrypt(user_session.password) === crypto.decrypt(mysql.SELECT('Password', 'Session')))
         {
             console.log('decrypt success');
 

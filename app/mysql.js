@@ -49,7 +49,6 @@ module.exports =
             else
             {
                 console.log('[DB]mysql connect -> success');
-                console.log(result);
             }
         });
     },
@@ -67,7 +66,6 @@ module.exports =
             else
             {
                 console.log('[DB]mysql connect -> success');
-                console.log(result);
             }
         });
     }
