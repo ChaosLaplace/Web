@@ -11,12 +11,9 @@ module.exports = function(app, log)
         //Error: Can't set headers after they are sent -> res.send()/res.json(),最後都有res.end()
         console.log('Server Access Flash -> get /');
 
-        var select = mysql.SELECT('Session');
-
         if(req.session.user)
         {
             console.log('Session -> %s', JSON.stringify(req.session.user));
-            console.log('select -> %s', select);
 
             res.render('login', {Date : date(), Session : 'Seesion -> ' + JSON.stringify(req.session.user)}); //載入index.ejs頁面
         }
@@ -43,20 +40,20 @@ module.exports = function(app, log)
         mysql.INSERT('Session', user_session.user, user_session.password);
 
         //查詢db是否有帳密
-        if(crypto.decrypt(user_session.user) === 'root' && crypto.decrypt(user_session.password) === 'root')
+        if(crypto.decrypt(user_session.user) === mysql.SELECT('User', 'Session') && crypto.decrypt(user_session.password) === mysql.SELECT('Password', 'Session'))
         {
-            console.log('root');
+            console.log('decrypt success');
 
             req.session.user = user_session; //cookie紀錄connect.sid
 
             //req.query -> 獲取URL的參數串
-            res.render('confirm', {user : user_session.user, password : user_session.password}); //載入get.ejs頁面
+            res.render('confirm', {user : user_session.user, password : user_session.password}); //載入confirm.ejs頁面
         }
         else
         {
             console.log('No root');
 
-            res.render('confirm', {user : user_session.user, password : user_session.password}); //載入get.ejs頁面
+            res.render('confirm', {user : user_session.user, password : user_session.password}); //載入confirm.ejs頁面
         }
     });
     //[GET] end

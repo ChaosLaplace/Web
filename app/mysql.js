@@ -51,14 +51,11 @@ module.exports =
                 console.log('[DB]mysql connect -> success');
                 console.log(result);
             }
-
-            console.log('[DB]mysql connect -> close');
-            connect_mysql.end();
         });
     },
-    SELECT : function(table)
+    SELECT : function(column, table)
     {
-        var select_session = 'SELECT * FROM ' + table;
+        var select_session = 'SELECT ' + column + ' FROM ' + table;
 
         connect_mysql.query(select_session, function(err, result)
         {
@@ -72,9 +69,6 @@ module.exports =
                 console.log('[DB]mysql connect -> success');
                 console.log(result);
             }
-
-            console.log('[DB]mysql connect -> close');
-            connect_mysql.end();
         });
     }
 };
