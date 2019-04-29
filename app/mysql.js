@@ -52,9 +52,9 @@ module.exports =
             }
         });
     },
-    SELECT : function(column, table)
+    SELECT : function(table)
     {
-        var select_session = 'SELECT ' + column + ' FROM ' + table;
+        var select_session = 'SELECT User FROM ' + table;
 
         connect_mysql.query(select_session, function(err, result)
         {
