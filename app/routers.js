@@ -1,89 +1,103 @@
-//app/mysql.js
-const mysql = require('mysql');
-
+//app/routers.js
 var date = require('../things/date'); //自製時間格式
+var crypto = require('../things/crypto'); //自製加解密格式
+var mysql = require('./mysql'); //自製db格式
 
-const config =
+module.exports = function(app, log)
 {
-    host: '35.201.129.44',
-    user: 'root',
-    password: 'mysql',
-    database: 'node',
-    port: 3306,
-    ssl: true
-};
-
-const connect_mysql = new mysql.createConnection(config);
-
-module.exports =
-{
-    connect : function()
+    //[get]
+    app.get('/', function(req, res)
     {
-        connect_mysql.connect(function(err)
-        { 
-            if(err) 
-            { 
-                console.log('[DB]mysql connect -> err');
-                throw err;
-            }
-            else
-            {
-                console.log('[DB]mysql connect -> success');
-            }
+        //Error: Can't set headers after they are sent -> res.send()/res.json(),最後都有res.end()
+        console.log('Server Access Flash -> get /');
 
-            console.log('[DB]mysql connect -> close');
-            connect_mysql.end();
-        });
-    },
-    INSERT : function(table, user, password)
-    {
-        var insert_session = "INSERT INTO " + table + " (User, Password, create_time) VALUES ('" + user + "', '" + password + "', '" + date() + "')";
-
-        connect_mysql.query(insert_session, function(err, result)
+        if(req.session.user)
         {
-            if(err) 
-            { 
-                console.log('[DB]mysql INSERT -> err');
-                throw err;
-            }
-            else
-            {
-                console.log('[DB]mysql INSERT -> success');
-                console.log('INSERT result -> %s', JSON.stringify(result));
-            }
-        });
-    },
-    SELECT : function(table, user, password, cb)
-    {
-        var select_session = 'SELECT User,Password FROM ' + table;
-        var hito = {}; 
+            console.log('Session -> %s', JSON.stringify(req.session.user));
 
-        connect_mysql.query(select_session, function(err, rows, fields)
+            res.render('login', {Date : date(), Session : 'Seesion -> ' + JSON.stringify(req.session.user)}); //載入index.ejs頁面
+        }
+        else
         {
-            if(err) 
-            { 
-                console.log('[DB]mysql SELECT -> err');
-                throw err;
-            }
-            else
+            console.log('No Session');
+
+            res.render('index', {Date : date(), Session : 'No Seesion'}); //載入index.ejs頁面
+        }
+    });
+    //驗證session
+    app.get('/confirm', function(req, res)
+    {
+        //Error: Can't set headers after they are sent -> res.send()/res.json(),最後都有res.end()
+        console.log('Server Confirm -> get /confirm');
+
+        //加密後存起來
+        var user_session =
+        {
+            user : crypto.encrypt(req.query.user),
+            password : crypto.encrypt(req.query.password)
+        };
+
+        mysql.INSERT('Session', user_session.user, user_session.password);
+
+        //查詢db是否有帳密
+        if(mysql.SELECT('Session', user_session.user, user_session.password) == true)
+        {
+            console.log('encrypt success');
+
+            req.session.user = user_session; //cookie紀錄connect.sid
+
+            //req.query -> 獲取URL的參數串
+            res.render('confirm', {user : crypto.decrypt(user_session.user), password : crypto.decrypt(user_session.password)}); //載入confirm.ejs頁面
+        }
+        else
+        {
+            console.log('no encrypt');
+
+            res.render('confirm', {user : user_session.user, password : user_session.password}); //載入confirm.ejs頁面
+        }
+    });
+    //[GET] end
+
+    //[post]
+    //驗證session
+    app.post('/confirm', function(req, res)
+    {
+        //Error: Can't set headers after they are sent -> res.send()/res.json(),最後都有res.end()
+        console.log('Server Confirm -> post /confirm');
+
+        //req.body -> 獲取表單
+        res.render('confirm', {user : req.body.user, password : req.body.password}); //載入get.ejs頁面   
+    });
+    //退出(清session)
+    app.post('/logout', function(req, res)
+    {
+        //Error: Can't set headers after they are sent -> res.send()/res.json(),最後都有res.end()
+        console.log('Server Confirm -> post /logout');
+
+        req.session.destroy(function(err)
+        {
+            if(err)
             {
-                console.log('[DB]mysql SELECT -> success');
+                log.error('退出失敗 -> ' + err);
 
-                for(key in rows)
-                {
-                    console.log(rows[key].User + ',' + rows[key].Password);
-
-                    if(rows[key].User === user && rows[key].Password === password)
-                    {
-                        console.log('驗證成功');
-
-                        hito.user = user;
-                        hito.password = password;
-
-                        cb(hito);
-                    }
-                }
+                res.send(err);
             }
+
+            console.log('session destroy');
+
+            res.clearCookie();
+            res.redirect('/');
         });
-    }
+    });
+    //[POST] end
+    
+    //沒有相符的路由
+    app.use(function(req, res, next)
+    {   
+        log.error('沒有相符的路由 -> ' + req.path);
+
+        res.render('no_app', {no_app : '沒有相符的路由'}); //載入no_app.ejs頁面
+
+        next();
+    });
 };
