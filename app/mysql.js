@@ -67,11 +67,10 @@ module.exports =
             else
             {
                 console.log('[DB]mysql SELECT -> success');
-                console.log('SELECT result -> %s', JSON.stringify(result));
 
                 for(key in rows)
                 {
-                    console.log(rows[key].a + ',' + rows[key].b);
+                    console.log(rows[key].User + ',' + rows[key].Password);
                 }
             }
         });
