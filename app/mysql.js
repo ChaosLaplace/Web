@@ -49,7 +49,7 @@ module.exports =
             else
             {
                 console.log('[DB]mysql INSERT -> success');
-                console.log('INSERT result -> %s', result);
+                console.log('INSERT result -> %s', JSON.stringify(result));
             }
         });
     },
@@ -67,7 +67,7 @@ module.exports =
             else
             {
                 console.log('[DB]mysql SELECT -> success');
-                console.log('SELECT result -> %s', result);
+                console.log('SELECT result -> %s', JSON.stringify(result));
             }
         });
     }
