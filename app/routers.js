@@ -38,8 +38,7 @@ module.exports = function(app, log)
         };
 
         mysql.INSERT('Session', user_session.user, user_session.password);
-        console.log(mysql.SELECT('Session'));
-        console.log('user_session.user -> %s', user_session.user);
+
         //查詢db是否有帳密
         if(user_session.user === mysql.SELECT('Session') && user_session.password === mysql.SELECT('Session'))
         {

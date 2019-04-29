@@ -55,9 +55,9 @@ module.exports =
     },
     SELECT : function(table)
     {
-        var select_session = 'SELECT * FROM ' + table;
+        var select_session = 'SELECT User,Password FROM ' + table;
 
-        connect_mysql.query(select_session, function(err, result)
+        connect_mysql.query(select_session, function(err, rows, fields)
         {
             if(err) 
             { 
@@ -68,6 +68,11 @@ module.exports =
             {
                 console.log('[DB]mysql SELECT -> success');
                 console.log('SELECT result -> %s', JSON.stringify(result));
+
+                for(key in rows)
+                {
+                    console.log(rows[key].a + ',' + rows[key].b);
+                }
             }
         });
     }
