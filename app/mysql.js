@@ -75,10 +75,8 @@ module.exports =
                     if(rows[key].User === user && rows[key].Password === password)
                     {
                         console.log('驗證成功');
-                        return true;
+                        cb(true);
                     }
-                    
-
                 }
             }
         });
