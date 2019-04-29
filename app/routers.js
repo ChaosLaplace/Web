@@ -40,18 +40,18 @@ module.exports = function(app, log)
         mysql.INSERT('Session', user_session.user, user_session.password);
 
         //查詢db是否有帳密
-        if(crypto.decrypt(user_session.user) === crypto.decrypt(mysql.SELECT('User', 'Session')) && crypto.decrypt(user_session.password) === crypto.decrypt(mysql.SELECT('Password', 'Session')))
+        if(user_session.user === mysql.SELECT('User', 'Session') && user_session.password === mysql.SELECT('Password', 'Session'))
         {
-            console.log('decrypt success');
+            console.log('encrypt success');
 
             req.session.user = user_session; //cookie紀錄connect.sid
 
             //req.query -> 獲取URL的參數串
-            res.render('confirm', {user : user_session.user, password : user_session.password}); //載入confirm.ejs頁面
+            res.render('confirm', {user : crypto.decrypt(user_session.user), password : crypto.decrypt(user_session.password)}); //載入confirm.ejs頁面
         }
         else
         {
-            console.log('No root');
+            console.log('no encrypt');
 
             res.render('confirm', {user : user_session.user, password : user_session.password}); //載入confirm.ejs頁面
         }
