@@ -53,11 +53,11 @@ module.exports =
             }
         });
     },
-    SELECT : function(table, user, password)
+    SELECT : function(table, user, password, cb)
     {
         var select_session = 'SELECT User,Password FROM ' + table;
 
-        connect_mysql.query(select_session, function(err, rows, fields, cb)
+        connect_mysql.query(select_session, function(err, rows, fields)
         {
             if(err) 
             { 
