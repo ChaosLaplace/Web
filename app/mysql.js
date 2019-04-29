@@ -49,12 +49,13 @@ module.exports =
             else
             {
                 console.log('[DB]mysql INSERT -> success');
+                console.log('INSERT result -> %s', result);
             }
         });
     },
     SELECT : function(table)
     {
-        var select_session = 'SELECT User FROM ' + table;
+        var select_session = 'SELECT * FROM ' + table;
 
         connect_mysql.query(select_session, function(err, result)
         {
@@ -66,6 +67,7 @@ module.exports =
             else
             {
                 console.log('[DB]mysql SELECT -> success');
+                console.log('SELECT result -> %s', result);
             }
         });
     }
