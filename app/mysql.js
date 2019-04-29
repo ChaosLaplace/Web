@@ -57,7 +57,7 @@ module.exports =
     {
         var select_session = 'SELECT User,Password FROM ' + table;
 
-        connect_mysql.query(select_session, function(err, rows, fields)
+        connect_mysql.query(select_session, function(err, rows, fields, cb)
         {
             if(err) 
             { 
