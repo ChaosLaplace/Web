@@ -43,12 +43,12 @@ module.exports =
         {
             if(err) 
             { 
-                console.log('[DB]mysql connect -> err');
+                console.log('[DB]mysql INSERT -> err');
                 throw err;
             }
             else
             {
-                console.log('[DB]mysql connect -> success');
+                console.log('[DB]mysql INSERT -> success');
             }
         });
     },
@@ -60,12 +60,12 @@ module.exports =
         {
             if(err) 
             { 
-                console.log('[DB]mysql connect -> err');
+                console.log('[DB]mysql SELECT -> err');
                 throw err;
             }
             else
             {
-                console.log('[DB]mysql connect -> success');
+                console.log('[DB]mysql SELECT -> success');
             }
         });
     }
