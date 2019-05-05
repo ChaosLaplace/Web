@@ -86,21 +86,15 @@ module.exports =
 
                             resolve(params);
                         }
-                        else
-                        {
-                            reject(error);
-                        }
                     }
                 }
             });
         });
 
-        promise.then(function(value)
+        return promise.then(function(value)
         {
             console.log('value -> %s', JSON.stringify(value));
             return value;
         });
-
-        return promise;
     }
 };
