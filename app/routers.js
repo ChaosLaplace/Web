@@ -45,7 +45,8 @@ module.exports = function(app, log)
         if(mysql_select)
         {
             console.log('帳號已存在');
-            res.render('mysql', {Session : '帳號已存在'});
+            console.log('mysql_select -> %s', mysql_select);
+            res.render('login', {Date : date(), Session : 'Seesion -> ' + JSON.stringify(req.session.user)}); //載入index.ejs頁面
         }
         else
         {
