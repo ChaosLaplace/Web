@@ -57,6 +57,8 @@ module.exports =
     {
         var promise = new Promise(function(resolve)
         {
+            var select_session = 'SELECT User,Password FROM ' + table;
+
             connect_mysql.query(select_session, function(err, rows, fields)
             {
                 if(err) 
@@ -77,21 +79,20 @@ module.exports =
                         {
                             console.log('驗證成功');
 
-                            var params = {};
                             params.user = rows[key].User;
                             params.password = rows[key].Password;
-                            console.log('params -> %s', JSON.stringify(params));
+                            console.log('params -> %s', params);
                             return res.json(params);
                         }
                     }
                 }
             });
+        });
 
-            return promise.then(function(value)
-            {
-                console.log('value -> %s', JSON.stringify(value));
-                return value;
-            });
+        return promise.then(function(value)
+        {
+            console.log('value -> %s', JSON.stringify(value));
+            return value;
         });
     }
 };
