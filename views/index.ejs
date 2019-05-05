@@ -16,7 +16,7 @@
             $('#Confirm').hide(); //驗證完才顯示
             $('#Error').hide(); //有錯誤訊息才顯示
 
-            $('#Pass').click(function()
+            $('#Sign').click(function()
             {
                 var params =
                 {
@@ -44,7 +44,7 @@
                     {
                         type : 'GET',
                         dataType : 'text',
-                        url : '/confirm',
+                        url : '/sign',
                         data : params,
                         error: function(jqXHR, textStatus, errorThrown)
                         {
@@ -79,7 +79,7 @@
         <div>請輸入密碼</div>
         <div><input id='Password' type='password'></div>
 
-        <div><button id='Pass' type='button'>Click</button></div>
+        <div><button id='Sign' type='button'>註冊</button></div>
         </table>
 
         <div id='Confirm'>Confirm</div>
