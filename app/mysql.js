@@ -83,6 +83,10 @@ module.exports =
                         params.user = rows[key].User;
                         params.password = rows[key].Password;
 
+                        console.log(res);
+                        console.log(res[0]);
+                        console.log(res[0].tid);
+                        console.log(res[0].tname);
                         return params;
                     }
                 }
