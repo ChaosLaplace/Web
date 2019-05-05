@@ -55,48 +55,37 @@ module.exports =
     },
     SELECT : function(table, user, password)
     {
-        var promise = new Promise(function(resolve)
+        var select_session = 'SELECT User,Password FROM ' + table;
+
+        connect_mysql.query(select_session, function(err, rows, fields)
         {
-            var select_session = 'SELECT User,Password FROM ' + table;
-
-            connect_mysql.query(select_session, function(err, rows, fields)
+            if(err) 
+            { 
+                console.log('[DB]mysql SELECT -> err');
+                throw err;
+            }
+            else
             {
-                if(err) 
-                { 
-                    console.log('[DB]mysql SELECT -> err');
-                    throw err;
-                }
-                else
+                console.log('[DB]mysql SELECT -> success');
+
+                for(key in rows)
                 {
-                    console.log('[DB]mysql SELECT -> success');
+                    console.log(rows[key].User + ',' + rows[key].Password);
+                    console.log('rows[%s] -> %s', key, JSON.stringify(rows[key]));
 
-                    for(key in rows)
+                    if(rows[key].User === user && rows[key].Password === password)
                     {
-                        console.log(rows[key].User + ',' + rows[key].Password);
-                        console.log('rows[%s] -> %s', key, JSON.stringify(rows[key]));
+                        console.log('驗證成功');
 
-                        if(rows[key].User === user && rows[key].Password === password)
-                        {
-                            console.log('驗證成功');
+                        params.user = rows[key].User;
+                        params.password = rows[key].Password;
 
-                            params.user = rows[key].User;
-                            params.password = rows[key].Password;
+                        console.log('resolve(params) -> ', resolve(params))
 
-                            console.log('resolve(params) -> ', resolve(params))
-
-                            resolve(params);
-                        }
+                        return Promise.resolve(params);
                     }
                 }
-            });
+            }
         });
-        promise.then(function(value)
-        {
-            console.log('value -> %s', JSON.stringify(value));
-            return value;
-        });
-
-        console.log('promise.resolve(params) -> ', promise.resolve(params));
-        return promise.resolve(params);
     }
 };
