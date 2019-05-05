@@ -90,13 +90,13 @@ module.exports =
                 }
             });
         });
-
         promise.then(function(value)
         {
             console.log('value -> %s', JSON.stringify(value));
             return value;
         });
 
-        return promise;
+        console.log('promise.resolve(params) -> ', promise.resolve(params));
+        return promise.resolve(params);
     }
 };
