@@ -53,7 +53,7 @@ module.exports =
             }
         });
     },
-    SELECT : function(table, user, password)
+    SELECT : function(table, user, password, callback)
     {
         var select_session = 'SELECT User,Password FROM ' + table;
 
@@ -73,14 +73,11 @@ module.exports =
                     console.log(rows[key].User + ',' + rows[key].Password);
                     console.log('rows[%s] -> %s', key, JSON.stringify(rows[key]));
 
-                    if(key == 1)
+                    if(rows[key].User === user && rows[key].Password === password)
                     {
-                        if(rows[key].User === user && rows[key].Password === password)
-                        {
-                            console.log('驗證成功');
+                        console.log('驗證成功');
 
-                            return true;
-                        }
+                        callback(err, true);
                     }
                 }
             }
