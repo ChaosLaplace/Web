@@ -53,7 +53,7 @@ module.exports =
             }
         });
     },
-    SELECT : function(table, user, password)
+    SELECT : function(table, user, password, res)
     {
         var promise = new Promise(function(resolve)
         {
