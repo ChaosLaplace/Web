@@ -50,7 +50,7 @@ module.exports = function(app, log)
             console.log('創帳號');
             req.session.user = user_session; //cookie紀錄connect.sid
 
-            console.log(mysql.SELECT('Session', user_session.user, user_session.password);
+            console.log(mysql.SELECT('Session', user_session.user, user_session.password));
             //mysql.INSERT('Session', user_session.user, user_session.password);
             res.render('mysql', {Date : date(), Session : '帳號已創建'});
             //req.query -> 獲取URL的參數串
