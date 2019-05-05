@@ -53,7 +53,7 @@ module.exports =
             }
         });
     },
-    SELECT : function(table, user, password)
+    SELECT : function(table, user, password, res)
     {
         var select_session = 'SELECT User,Password FROM ' + table;
 

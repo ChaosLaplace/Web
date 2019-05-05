@@ -39,7 +39,7 @@ module.exports = function(app, log)
             password : req.query.password
         };
 
-        var mysql_select = mysql.SELECT('Session', user_session.user, user_session.password);
+        var mysql_select = mysql.SELECT('Session', user_session.user, user_session.password, res);
 
         //查詢db是否有帳密
         if(mysql_select)
