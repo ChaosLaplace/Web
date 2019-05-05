@@ -82,8 +82,7 @@ module.exports =
                             var params = {};
                             params.user = rows[key].User;
                             params.password = rows[key].Password;
-                            console.log('params -> %s', params);
-                            return res.json(params);
+                            console.log('params -> %s', JSON.stringify(params));
                         }
                     }
                 }
@@ -93,7 +92,7 @@ module.exports =
         return promise.then(function(value)
         {
             console.log('value -> %s', JSON.stringify(value));
-            return value;
+            return res.json(params);
         });
     }
 };
