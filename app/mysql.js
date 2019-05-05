@@ -56,7 +56,6 @@ module.exports =
     SELECT : function(table, user, password, cb)
     {
         var select_session = 'SELECT User,Password FROM ' + table;
-        var hito = {}; 
 
         connect_mysql.query(select_session, function(err, rows, fields)
         {
@@ -77,10 +76,7 @@ module.exports =
                     {
                         console.log('驗證成功');
 
-                        hito.user = user;
-                        hito.password = password;
-
-                        cb(hito);
+                        return true;
                     }
                 }
             }

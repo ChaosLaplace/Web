@@ -25,35 +25,34 @@ module.exports = function(app, log)
         }
     });
     //驗證session
-    app.get('/confirm', function(req, res)
+    app.get('/sign', function(req, res)
     {
         //Error: Can't set headers after they are sent -> res.send()/res.json(),最後都有res.end()
-        console.log('Server Confirm -> get /confirm');
+        console.log('Server sign -> get /sign');
 
         //加密後存起來
         var user_session =
         {
-            user : crypto.encrypt(req.query.user),
-            password : crypto.encrypt(req.query.password)
+            //user : crypto.encrypt(req.query.user),
+            //password : crypto.encrypt(req.query.password)
+            user : req.query.user,
+            password : req.query.password
         };
-
-        mysql.INSERT('Session', user_session.user, user_session.password);
 
         //查詢db是否有帳密
         if(mysql.SELECT('Session', user_session.user, user_session.password))
         {
-            console.log('encrypt success');
-
-            req.session.user = user_session; //cookie紀錄connect.sid
-
-            //req.query -> 獲取URL的參數串
-            res.render('confirm', {user : crypto.decrypt(user_session.user), password : crypto.decrypt(user_session.password)}); //載入confirm.ejs頁面
+            res.render('index', {Date : date(), Session : '帳號已存在'});
         }
         else
         {
-            console.log('no encrypt');
+            console.log('創帳號');
+            req.session.user = user_session; //cookie紀錄connect.sid
 
-            res.render('confirm', {user : user_session.user, password : user_session.password}); //載入confirm.ejs頁面
+            //mysql.INSERT('Session', user_session.user, user_session.password);
+            res.render('index', {Date : date(), Session : '帳號已創建'});
+            //req.query -> 獲取URL的參數串
+            //res.render('confirm', {user : crypto.decrypt(user_session.user), password : crypto.decrypt(user_session.password)}); //載入confirm.ejs頁面
         }
     });
     //[GET] end
@@ -63,16 +62,16 @@ module.exports = function(app, log)
     app.post('/confirm', function(req, res)
     {
         //Error: Can't set headers after they are sent -> res.send()/res.json(),最後都有res.end()
-        console.log('Server Confirm -> post /confirm');
+        console.log('Server confirm -> post /confirm');
 
         //req.body -> 獲取表單
         res.render('confirm', {user : req.body.user, password : req.body.password}); //載入get.ejs頁面   
     });
-    //退出(清session)
+    //退出(刪除session)
     app.post('/logout', function(req, res)
     {
         //Error: Can't set headers after they are sent -> res.send()/res.json(),最後都有res.end()
-        console.log('Server Confirm -> post /logout');
+        console.log('Server logout -> post /logout');
 
         req.session.destroy(function(err)
         {
