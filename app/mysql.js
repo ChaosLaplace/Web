@@ -92,7 +92,7 @@ module.exports =
         return promise.then(function(value)
         {
             console.log('value -> %s', JSON.stringify(value));
-            return res.json(params);
+            return params;
         });
     }
 };
