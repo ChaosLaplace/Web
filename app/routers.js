@@ -46,7 +46,6 @@ module.exports = function(app, log)
         {
             req.session.user = user_session; //cookie紀錄connect.sid
             console.log('帳號已存在');
-            console.log('mysql_select.user -> %s', mysql_select.user);
             res.render('login', {Date : date(), Session : '帳號已存在 -> ' + JSON.stringify(req.session.user)}); //載入index.ejs頁面
         }
         else

@@ -95,5 +95,7 @@ module.exports =
             console.log('value -> %s', JSON.stringify(value));
             return value;
         });
+
+        return promise;
     }
 };
