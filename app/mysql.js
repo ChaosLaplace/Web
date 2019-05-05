@@ -53,7 +53,7 @@ module.exports =
             }
         });
     },
-    SELECT : function(table, user, password, callback)
+    SELECT : function(table, user, password)
     {
         var select_session = 'SELECT User,Password FROM ' + table;
 
@@ -76,8 +76,6 @@ module.exports =
                     if(rows[key].User === user && rows[key].Password === password)
                     {
                         console.log('驗證成功');
-
-                        callback(err, true);
                     }
                 }
             }
