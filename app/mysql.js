@@ -93,7 +93,7 @@ module.exports =
 
         promise.then(function(value)
         {
-            console.log('value -> %s', value);
+            console.log('value -> %s', JSON.stringify(value));
             return value;
         });
 
