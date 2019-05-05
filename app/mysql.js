@@ -59,6 +59,8 @@ module.exports =
 
         connect_mysql.query(select_session, function(err, rows, fields)
         {
+            var params = {};
+            
             if(err) 
             { 
                 console.log('[DB]mysql SELECT -> err');
@@ -77,16 +79,13 @@ module.exports =
                     {
                         console.log('驗證成功');
 
-                        var params =
-                        {
-                            user : rows[key].User,
-                            password : rows[key].Password
-                        }
-
-                        return params;
+                        params.user = rows[key].User;
+                        params.password = rows[key].Password;
                     }
                 }
             }
+
+            return params;
         });
     }
 };
