@@ -42,11 +42,11 @@ module.exports = function(app, log)
         var mysql_select = mysql.SELECT('Session', user_session.user, user_session.password);
 
         //查詢db是否有帳密
-        if(mysql_select)
+        if(mysql_select != {})
         {
             req.session.user = user_session; //cookie紀錄connect.sid
             console.log('帳號已存在');
-            console.log('mysql_select.user -> %s', JSON.stringify(mysql_select));
+            console.log('mysql_select -> %s', JSON.stringify(mysql_select));
             res.render('login', {Date : date(), Session : '帳號已存在 -> ' + JSON.stringify(req.session.user)}); //載入index.ejs頁面
         }
         else
