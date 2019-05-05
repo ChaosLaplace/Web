@@ -83,7 +83,7 @@ module.exports =
                         params.user = rows[key].User;
                         params.password = rows[key].Password;
 
-                        return res.params = params;
+                        return res.json(params);
                     }
                 }
             }
