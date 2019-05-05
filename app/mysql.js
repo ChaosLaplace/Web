@@ -53,7 +53,7 @@ module.exports =
             }
         });
     },
-    SELECT : function(table, user, password, res)
+    SELECT : function(table, user, password, cb)
     {
         var promise = new Promise(function(resolve)
         {
@@ -92,7 +92,7 @@ module.exports =
         return promise.then(function(value)
         {
             console.log('value -> %s', JSON.stringify(value));
-            return params;
+            return cb(params);
         });
     }
 };
