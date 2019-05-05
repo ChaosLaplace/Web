@@ -77,7 +77,13 @@ module.exports =
                     {
                         console.log('驗證成功');
 
-                        return res.send('帳號 -> $s && 密碼 -> %s', rows[key].User, rows[key].Password);
+                        var params =
+                        {
+                            user : rows[key].User,
+                            password : rows[key].Password
+                        }
+
+                        return params;
                     }
                 }
             }
