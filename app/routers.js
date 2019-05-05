@@ -46,13 +46,14 @@ module.exports = function(app, log)
         {
             req.session.user = user_session; //cookie紀錄connect.sid
             console.log('帳號已存在');
+            console.log('mysql_select.user -> %s', JSON.string(mysql_select));
             res.render('login', {Date : date(), Session : '帳號已存在 -> ' + JSON.stringify(req.session.user)}); //載入index.ejs頁面
         }
         else
         {
             console.log('創帳號');
             
-            mysql.INSERT('Session', user_session.user, user_session.password);
+            //mysql.INSERT('Session', user_session.user, user_session.password);
             res.render('mysql', {Date : date(), Session : '帳號已創建,請刷新頁面(F5)'});
             //req.query -> 獲取URL的參數串
             //res.render('confirm', {user : crypto.decrypt(user_session.user), password : crypto.decrypt(user_session.password)}); //載入confirm.ejs頁面
