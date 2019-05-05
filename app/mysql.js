@@ -77,6 +77,7 @@ module.exports =
                     {
                         console.log('驗證成功');
 
+                        var params = {};
                         params.user = rows[key].User;
                         params.password = rows[key].Password;
 
