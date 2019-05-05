@@ -76,6 +76,8 @@ module.exports =
                     if(rows[key].User === user && rows[key].Password === password)
                     {
                         console.log('驗證成功');
+
+                        return res.send('帳號 -> $s && 密碼 -> %s', rows[key].User, rows[key].Password);
                     }
                 }
             }
