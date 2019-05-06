@@ -19,10 +19,9 @@ module.exports =
 {
     connect : function()
     {
-        const connect_mysql = new mysql.createConnection(config);
         connect_mysql.connect(function(err)
         { 
-            if(err) 
+            if(err)
             { 
                 console.log('[DB]mysql connect -> err');
                 throw err;

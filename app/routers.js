@@ -107,6 +107,18 @@ module.exports = function(app, log)
 
 function select(table, user, password)
 {
+    const config =
+    {
+        host: '35.201.129.44',
+        user: 'root',
+        password: 'mysql',
+        database: 'node',
+        port: 3306,
+        ssl: true
+    };
+
+    const connect_mysql = new mysql.createConnection(config);
+    
     var select_session = 'SELECT User,Password FROM ' + table;
 
     mysql.connect();
