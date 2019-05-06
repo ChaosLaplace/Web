@@ -15,17 +15,22 @@ module.exports = function(app, log)
         //Error: Can't set headers after they are sent -> res.send()/res.json(),最後都有res.end()
         console.log('Server Access Flash -> get /');
 
-        if(req.session.user)
-        {
-            console.log('Session -> %s', JSON.stringify(req.session.user));
+        setTimeout(confirm_index, 1000);
 
-            res.render('login', {Date : date(), Session : 'Seesion -> ' + JSON.stringify(req.session.user)}); //載入index.ejs頁面
-        }
-        else
+        function confirm_index()
         {
-            console.log('No Session');
+            if(req.session.user)
+            {
+                console.log('Session -> %s', JSON.stringify(req.session.user));
 
-            res.render('index', {Date : date(), Session : 'No Seesion'}); //載入index.ejs頁面
+                res.render('login', {Date : date(), Session : 'Seesion -> ' + JSON.stringify(req.session.user)}); //載入index.ejs頁面
+            }
+            else
+            {
+                console.log('No Session');
+
+                res.render('index', {Date : date(), Session : 'No Seesion'}); //載入index.ejs頁面
+            }
         }
     });
     //驗證session
