@@ -14,7 +14,6 @@ module.exports = function(app, log)
     {
         //Error: Can't set headers after they are sent -> res.send()/res.json(),最後都有res.end()
         console.log('Server Access Flash -> get /');
-        params = {};
 
         if(req.session.user)
         {
@@ -47,8 +46,9 @@ module.exports = function(app, log)
         req.session.user = user_session; //cookie紀錄connect.sid
         
         select('Session', user_session.user, user_session.password);
-        
+
         setTimeout(confirm, 1000);
+
         function confirm()
         {
             console.log('params -> %s', JSON.stringify(params));
@@ -67,6 +67,8 @@ module.exports = function(app, log)
                 //req.query -> 獲取URL的參數串
                 //res.render('confirm', {user : crypto.decrypt(user_session.user), password : crypto.decrypt(user_session.password)}); //載入confirm.ejs頁面
             }
+
+            params = {};
         }
     });
     //[GET] end
