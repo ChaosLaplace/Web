@@ -110,63 +110,63 @@ module.exports = function(app, log)
 
         next();
     });
-};
 
-function select(table, user, password)
-{
-    const config =
+    function select(table, user, password)
     {
-        host: '35.201.129.44',
-        user: 'root',
-        password: 'mysql',
-        database: 'node',
-        port: 3306,
-        ssl: true
-    };
-
-    const connect_mysql = new mysql.createConnection(config);
-
-    var select_session = 'SELECT User,Password FROM ' + table;
-
-    connect_mysql.query(select_session, function(err, rows, fields)
-    {
-        if(err) 
-        { 
-            console.log('[DB]mysql SELECT -> err');
-            throw err;
-        }
-        else
+        const config =
         {
-            console.log('[DB]mysql SELECT -> success');
+            host: '35.201.129.44',
+            user: 'root',
+            password: 'mysql',
+            database: 'node',
+            port: 3306,
+            ssl: true
+        };
 
-            for(key in rows)
+        const connect_mysql = new mysql.createConnection(config);
+
+        var select_session = 'SELECT User,Password FROM ' + table;
+
+        connect_mysql.query(select_session, function(err, rows, fields)
+        {
+            if(err) 
+            { 
+                console.log('[DB]mysql SELECT -> err');
+                throw err;
+            }
+            else
             {
-                console.log(rows[key].User + ',' + rows[key].Password);
-                console.log('rows[%s] -> %s', key, JSON.stringify(rows[key]));
+                console.log('[DB]mysql SELECT -> success');
 
-                if(rows[key].User === user && rows[key].Password === password)
+                for(key in rows)
                 {
-                    params.user = rows[key].User;
-                    params.password = rows[key].Password;
+                    console.log(rows[key].User + ',' + rows[key].Password);
+                    console.log('rows[%s] -> %s', key, JSON.stringify(rows[key]));
 
-                    console.log('驗證成功');
+                    if(rows[key].User === user && rows[key].Password === password)
+                    {
+                        params.user = rows[key].User;
+                        params.password = rows[key].Password;
+
+                        console.log('驗證成功');
+                    }
                 }
             }
-        }
-    });
-}
-
-function isEmptyObject(obj)
-{
-    for(var key in obj)
-    {
-        return false;
+        });
     }
 
-    return true;
-}
+    function isEmptyObject(obj)
+    {
+        for(var key in obj)
+        {
+            return false;
+        }
 
-function redirect()
-{
-    res.redirect('/');
-}
+        return true;
+    }
+
+    function redirect()
+    {
+        res.redirect('/');
+    }
+};
