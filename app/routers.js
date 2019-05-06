@@ -62,7 +62,7 @@ module.exports = function(app, log)
             {
                 console.log('帳號已存在');
                 
-                res.redirect(200, '/');
+                res.redirect(302, '/');
             }
             else
             {
