@@ -148,7 +148,7 @@ module.exports = function(app, log)
                         params.user = rows[key].User;
                         params.password = rows[key].Password;
 
-                        console.log('驗證成功');
+                        console.log('驗證成功 params -> %s', JSON.stringify(params));
                     }
                 }
             }
@@ -159,9 +159,9 @@ module.exports = function(app, log)
     {
         for(var key in obj)
         {
-            return false;
+            return true;
         }
 
-        return true;
+        return false;
     }
 };
