@@ -46,7 +46,7 @@ module.exports = function(app, log)
 
         req.session.user = user_session; //cookie紀錄connect.sid
         
-        var mysql_select = setTimeout(select('Session', user_session.user, user_session.password), 1000);
+        var mysql_select = select('Session', user_session.user, user_session.password);
         console.log('params -> %s', JSON.stringify(params));
         console.log('mysql_select -> %s', JSON.stringify(mysql_select));
 
