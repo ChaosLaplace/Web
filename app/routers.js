@@ -39,7 +39,7 @@ module.exports = function(app, log)
             password : req.query.password
         };
 
-        var mysql_select = mysql.SELECT('Session', user_session.user, user_session.password, cb);
+        var mysql_select = select('Session', user_session.user, user_session.password);
 
         //查詢db是否有帳密
         if(mysql_select)
@@ -51,6 +51,7 @@ module.exports = function(app, log)
         else
         {
             console.log('創帳號');
+            console.log('mysql_select -> %s', JSON.stringify(mysql_select));
             req.session.user = user_session; //cookie紀錄connect.sid
             //mysql.INSERT('Session', user_session.user, user_session.password);
             res.render('mysql', {Date : date(), Session : '帳號已創建,請刷新頁面(F5)'});
@@ -103,3 +104,39 @@ module.exports = function(app, log)
         next();
     });
 };
+
+function select(table, user, password)
+{
+    var select_session = 'SELECT User,Password FROM ' + table;
+
+    connect_mysql.query(select_session, function(err, rows, fields)
+    {
+        if(err) 
+        { 
+            console.log('[DB]mysql SELECT -> err');
+            throw err;
+        }
+        else
+        {
+            console.log('[DB]mysql SELECT -> success');
+
+            for(key in rows)
+            {
+                console.log(rows[key].User + ',' + rows[key].Password);
+                console.log('rows[%s] -> %s', key, JSON.stringify(rows[key]));
+
+                if(rows[key].User === user && rows[key].Password === password)
+                {
+                    console.log('驗證成功');
+
+                    var params = {};
+                    params.user = rows[key].User;
+                    params.password = rows[key].Password;
+                    console.log('params -> %s', JSON.stringify(params));
+
+                    return params;
+                }
+            }
+        }
+    });
+}
