@@ -1,4 +1,6 @@
 //app/routers.js
+const mysql = require('mysql');
+
 var date = require('../things/date'); //自製時間格式
 var crypto = require('../things/crypto'); //自製加解密格式
 var mysql = require('./mysql'); //自製db格式
@@ -118,10 +120,8 @@ function select(table, user, password)
     };
 
     const connect_mysql = new mysql.createConnection(config);
-    
-    var select_session = 'SELECT User,Password FROM ' + table;
 
-    mysql.connect();
+    var select_session = 'SELECT User,Password FROM ' + table;
 
     connect_mysql.query(select_session, function(err, rows, fields)
     {
