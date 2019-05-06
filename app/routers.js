@@ -62,7 +62,7 @@ module.exports = function(app, log)
             {
                 console.log('帳號已存在');
                 
-                res.redirect('104.155.206.74');
+                res.redirect('/');
             }
             else
             {
