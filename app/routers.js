@@ -62,7 +62,7 @@ module.exports = function(app, log)
             {
                 console.log('帳號已存在');
                 
-                res.redirect('mysql', {Date : date(), Session : '帳號已存在,請刷新頁面(F5)'});
+                res.redirect('/login');
             }
             else
             {
@@ -75,6 +75,13 @@ module.exports = function(app, log)
 
             params = {};
         }
+    });
+    //登入
+    app.get('/login', function(req, res)
+    {
+        //Error: Can't set headers after they are sent -> res.send()/res.json(),最後都有res.end()
+        console.log('Server login -> get /login');
+        res.render('login', {Date : date(), Session : 'Seesion -> ' + JSON.stringify(req.session.user)}); //載入index.ejs頁面
     });
     //[GET] end
 
