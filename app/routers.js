@@ -44,18 +44,18 @@ module.exports = function(app, log)
         };
 
         var mysql_select = select('Session', user_session.user, user_session.password);
+        console.log('params -> %s', JSON.stringify(params));
 
         //查詢db是否有帳密
         if(Object.keys(params).length !== 0)
         {
             console.log('帳號已存在');
-            console.log('params -> %s', JSON.stringify(params));
+            
             res.redirect('/');
         }
         else
         {
             console.log('創帳號');
-            console.log('params -> %s', JSON.stringify(params));
             req.session.user = user_session; //cookie紀錄connect.sid
             //mysql_db.INSERT('Session', user_session.user, user_session.password);
             res.render('mysql', {Date : date(), Session : '帳號已創建,請刷新頁面(F5)'});
