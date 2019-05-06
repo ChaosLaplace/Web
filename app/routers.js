@@ -46,24 +46,27 @@ module.exports = function(app, log)
 
         req.session.user = user_session; //cookie紀錄connect.sid
         
-        var mysql_select = select('Session', user_session.user, user_session.password);
-        console.log('params -> %s', JSON.stringify(params));
-        console.log('mysql_select -> %s', JSON.stringify(mysql_select));
-
-        //查詢db是否有帳密
-        if(isEmptyObject(params))
+        select('Session', user_session.user, user_session.password);
+        
+        setTimeout(confirm, 1000);
+        function confirm()
         {
-            console.log('帳號已存在');
-            
-            res.render('login', {Date : date(), Session : 'Seesion -> ' + JSON.stringify(req.session.user)}); //載入index.ejs頁面
-        }
-        else
-        {
-            console.log('創帳號');
-            //mysql_db.INSERT('Session', user_session.user, user_session.password);
-            res.render('mysql', {Date : date(), Session : '帳號已創建,請刷新頁面(F5)'});
-            //req.query -> 獲取URL的參數串
-            //res.render('confirm', {user : crypto.decrypt(user_session.user), password : crypto.decrypt(user_session.password)}); //載入confirm.ejs頁面
+            console.log('params -> %s', JSON.stringify(params));
+            //查詢db是否有帳密
+            if(isEmptyObject(params))
+            {
+                console.log('帳號已存在');
+                
+                res.render('login', {Date : date(), Session : 'Seesion -> ' + JSON.stringify(req.session.user)}); //載入index.ejs頁面
+            }
+            else
+            {
+                console.log('創帳號');
+                //mysql_db.INSERT('Session', user_session.user, user_session.password);
+                res.render('mysql', {Date : date(), Session : '帳號已創建,請刷新頁面(F5)'});
+                //req.query -> 獲取URL的參數串
+                //res.render('confirm', {user : crypto.decrypt(user_session.user), password : crypto.decrypt(user_session.password)}); //載入confirm.ejs頁面
+            }
         }
     });
     //[GET] end
