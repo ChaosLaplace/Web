@@ -46,7 +46,6 @@ module.exports = function(app, log)
         req.session.user = user_session; //cookie紀錄connect.sid
         
         var mysql_select = select('Session', user_session.user, user_session.password);
-        console.log('mysql_select -> %s', JSON.stringify(mysql_select));
 
         setTimeout(confirm, 1000);
 
@@ -58,7 +57,7 @@ module.exports = function(app, log)
             {
                 console.log('帳號已存在');
                 
-                res.redirect('login', {Date : date(), Session : 'Seesion -> ' + JSON.stringify(req.session.user)}); //載入index.ejs頁面
+                res.redirect('/');
             }
             else
             {
@@ -155,8 +154,6 @@ module.exports = function(app, log)
                         params.password = rows[key].Password;
 
                         console.log('驗證成功 params -> %s', JSON.stringify(params));
-
-                        return params;
                     }
                 }
             }
