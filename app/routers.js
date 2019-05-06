@@ -152,3 +152,13 @@ function select(table, user, password)
         }
     });
 }
+
+function isEmptyObject(obj)
+{
+    for(var key in obj)
+    {
+        return false;
+    }
+
+    return true;
+}
