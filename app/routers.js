@@ -165,7 +165,7 @@ module.exports = function(app, log)
         return true;
     }
 
-    function redirect()
+    function redirect(res)
     {
         res.redirect('/');
     }
