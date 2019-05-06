@@ -55,7 +55,7 @@ module.exports = function(app, log)
         {
             console.log('帳號已存在');
             
-            setTimeout(redirect, 1000);
+            res.redirect('/');
         }
         else
         {
@@ -96,7 +96,7 @@ module.exports = function(app, log)
             console.log('session destroy');
 
             res.clearCookie();
-            setTimeout(redirect, 1000);
+            res.redirect('/');
         });
     });
     //[POST] end
@@ -163,10 +163,5 @@ module.exports = function(app, log)
         }
 
         return true;
-    }
-
-    function redirect(res)
-    {
-        res.redirect('/');
     }
 };
