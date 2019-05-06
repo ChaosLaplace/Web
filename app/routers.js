@@ -43,6 +43,7 @@ module.exports = function(app, log)
             password : req.query.password
         };
 
+        params = {};
         var mysql_select = select('Session', user_session.user, user_session.password);
         console.log('params -> %s', JSON.stringify(params));
 
