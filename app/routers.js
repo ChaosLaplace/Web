@@ -49,13 +49,13 @@ module.exports = function(app, log)
         if(mysql_select)
         {
             console.log('帳號已存在');
+            console.log('params -> %s', JSON.stringify(params));
             console.log('mysql_select -> %s', JSON.stringify(mysql_select));
             res.redirect('/');
         }
         else
         {
             console.log('創帳號');
-            console.log('mysql_select -> %s', JSON.stringify(mysql_select));
             console.log('params -> %s', JSON.stringify(params));
             req.session.user = user_session; //cookie紀錄connect.sid
             //mysql_db.INSERT('Session', user_session.user, user_session.password);
@@ -126,41 +126,31 @@ function select(table, user, password)
 
     var select_session = 'SELECT User,Password FROM ' + table;
 
-    var promise = new Promise(function(resolve, reject)
+    connect_mysql.query(select_session, function(err, rows, fields)
     {
-        connect_mysql.query(select_session, function(err, rows, fields)
+        if(err) 
+        { 
+            console.log('[DB]mysql SELECT -> err');
+            throw err;
+        }
+        else
         {
-            if(err) 
-            { 
-                console.log('[DB]mysql SELECT -> err');
-                throw err;
-            }
-            else
+            console.log('[DB]mysql SELECT -> success');
+
+            for(key in rows)
             {
-                console.log('[DB]mysql SELECT -> success');
+                console.log(rows[key].User + ',' + rows[key].Password);
+                console.log('rows[%s] -> %s', key, JSON.stringify(rows[key]));
 
-                for(key in rows)
+                if(rows[key].User === user && rows[key].Password === password)
                 {
-                    console.log(rows[key].User + ',' + rows[key].Password);
-                    console.log('rows[%s] -> %s', key, JSON.stringify(rows[key]));
-
-                    if(rows[key].User === user && rows[key].Password === password)
-                    {
-                        console.log('驗證成功');
-
-                        params.user = rows[key].User;
-                        params.password = rows[key].Password;
-                        console.log('params -> %s', JSON.stringify(params));
-
-                        resolve(params);
-                    }
+                    params.user = rows[key].User;
+                    params.password = rows[key].Password;
+                    
+                    console.log('驗證成功');
+                    console.log('params -> %s', JSON.stringify(params));
                 }
             }
-        });
-    });
-
-    return promise.then(function(value)
-    {
-        return value;
+        }
     });
 }
