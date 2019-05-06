@@ -47,7 +47,7 @@ module.exports = function(app, log)
         console.log('params -> %s', JSON.stringify(params));
 
         //查詢db是否有帳密
-        if(Object.keys(params).length !== 0)
+        if(for(var i in params){return true;})
         {
             console.log('帳號已存在');
             
