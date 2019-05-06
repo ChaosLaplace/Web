@@ -62,8 +62,7 @@ module.exports = function(app, log)
             {
                 console.log('帳號已存在');
                 
-                res.location('http://104.155.206.74/');
-                res.send(302);
+                res.render('mysql', {Date : date(), Session : '帳號已存在,請刷新頁面(F5)'});
             }
             else
             {
