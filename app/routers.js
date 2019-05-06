@@ -63,7 +63,7 @@ module.exports = function(app, log)
                 console.log('帳號已存在');
                 
                 res.location('http://104.155.206.74/');
-                res.send(200);
+                res.send(302);
             }
             else
             {
