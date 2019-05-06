@@ -62,7 +62,7 @@ module.exports = function(app, log)
             {
                 console.log('帳號已存在');
                 
-                res.location('mysql', {Date : date(), Session : '帳號已存在,請刷新頁面(F5)'});
+                res.redirect('mysql', {Date : date(), Session : '帳號已存在,請刷新頁面(F5)'});
             }
             else
             {
