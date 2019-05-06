@@ -46,7 +46,7 @@ module.exports = function(app, log)
         var mysql_select = select('Session', user_session.user, user_session.password);
 
         //查詢db是否有帳密
-        if(mysql_select)
+        if(params)
         {
             console.log('帳號已存在');
             console.log('params -> %s', JSON.stringify(params));
