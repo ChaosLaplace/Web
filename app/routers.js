@@ -57,7 +57,7 @@ module.exports = function(app, log)
             {
                 console.log('帳號已存在');
                 
-                res.render('login', {Date : date(), Session : 'Seesion -> ' + JSON.stringify(req.session.user)}); //載入index.ejs頁面
+                res.redirect('/');
             }
             else
             {
