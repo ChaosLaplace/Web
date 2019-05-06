@@ -109,6 +109,8 @@ function select(table, user, password)
 {
     var select_session = 'SELECT User,Password FROM ' + table;
 
+    mysql.connect();
+
     connect_mysql.query(select_session, function(err, rows, fields)
     {
         if(err) 

@@ -19,6 +19,7 @@ module.exports =
 {
     connect : function()
     {
+        const connect_mysql = new mysql.createConnection(config);
         connect_mysql.connect(function(err)
         { 
             if(err) 
@@ -30,9 +31,6 @@ module.exports =
             {
                 console.log('[DB]mysql connect -> success');
             }
-
-            console.log('[DB]mysql connect -> close');
-            connect_mysql.end();
         });
     },
     INSERT : function(table, user, password)
