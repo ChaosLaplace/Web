@@ -14,6 +14,7 @@ module.exports = function(app, log)
     {
         //Error: Can't set headers after they are sent -> res.send()/res.json(),最後都有res.end()
         console.log('Server Access Flash -> get /');
+        params = {};
 
         if(req.session.user)
         {
@@ -44,16 +45,17 @@ module.exports = function(app, log)
         };
 
         req.session.user = user_session; //cookie紀錄connect.sid
-        params = {};
-        var mysql_select = select('Session', user_session.user, user_session.password);
+        
+        var mysql_select = setTimeout(select('Session', user_session.user, user_session.password), 1000);
         console.log('params -> %s', JSON.stringify(params));
+        console.log('mysql_select -> %s', JSON.stringify(mysql_select));
 
         //查詢db是否有帳密
         if(isEmptyObject(params))
         {
             console.log('帳號已存在');
             
-            res.redirect('/');
+            setTimeout(redirect, 1000);
         }
         else
         {
@@ -94,7 +96,7 @@ module.exports = function(app, log)
             console.log('session destroy');
 
             res.clearCookie();
-            res.redirect('/');
+            setTimeout(redirect, 1000);
         });
     });
     //[POST] end
@@ -162,4 +164,9 @@ function isEmptyObject(obj)
     }
 
     return true;
+}
+
+function redirect()
+{
+    res.redirect('/');
 }
